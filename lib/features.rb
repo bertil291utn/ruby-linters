@@ -1,0 +1,5 @@
+module Features
+  IDENTATION = 2
+  TAMANO_ARCHIVO_LINEAS = 140
+  TAMANO_LINEA = 100
+end
