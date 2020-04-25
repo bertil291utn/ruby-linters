@@ -5,11 +5,19 @@ class LinterLogic
     @archivo = archivo
   end
 
-  def validate_length_lines?
+  def valid_file_lines?
     file = File.open(@archivo, 'r')
     count_file_size = file.readlines.size
-    return false if count_file_size > Features::TAMANO_ARCHIVO_LINEAS
+    return true if count_file_size < Features::TAMANO_ARCHIVO_LINEAS
 
-    true
+    false
+  end
+
+  def extra_space_at_end
+    File.foreach(@archivo).with_index do |line, line_num|
+      space_at_end = line.lstrip.count(' ')
+      return line_num if space_at_end > Features::IDENTATION
+    end
+    -1
   end
 end
