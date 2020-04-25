@@ -5,7 +5,7 @@ class ActionListener
     @linter_logic = LinterLogic.new(archivo)
   end
 
-  def action_valid_file_lines?
+  def action_valid_file_lines
     if @linter_logic.valid_file_lines?
       return "Respected max length for code. Check [Less than #{Features::TAMANO_ARCHIVO_LINEAS} lines]"
     end
@@ -15,8 +15,8 @@ class ActionListener
 
   def action_extra_space_at_end
     extra_space = @linter_logic.extra_space_at_end
-    return 'No extra spaces at the end of lines' if extra_space == -1
+    puts 'No extra spaces at the end of lines' if extra_space.empty?
 
-    'You have extra spaces at line number: ' + extra_space.to_s
+    extra_space.each { |elem| puts 'You have extra spaces at line number: ' + elem.to_s }
   end
 end
