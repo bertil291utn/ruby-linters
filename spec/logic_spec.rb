@@ -1,3 +1,4 @@
+# rubocop:disable Layout/LineLength
 require_relative '../lib/linter_logic.rb'
 
 RSpec.describe LinterLogic do
@@ -11,8 +12,16 @@ RSpec.describe LinterLogic do
   end
 
   describe '#extra_space_at_end' do
-    it 'returns an array with number of the line where there\'s blank space at the end of each line' do
-      expect(linter_logic.extra_space_at_end).to eq([7, 9, 10])
+    it 'returns an array with elements (numbers of the line where there are more than two blank space at the end of each line)' do
+      expect(linter_logic.extra_space_at_end).to eq([])
+    end
+  end
+
+  describe '#two_empty_lines?' do
+    it 'returns an array with elements (number of the line where the are more than two empty lines) ' do
+      expect(linter_logic.two_empty_lines).to eq([])
     end
   end
 end
+
+# rubocop:enable Layout/LineLength

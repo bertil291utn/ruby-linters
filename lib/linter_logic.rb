@@ -21,4 +21,22 @@ class LinterLogic
     end
     resultado
   end
+
+  def two_empty_lines
+    resultado = []
+    previous_line = nil
+    File.foreach(@archivo).with_index do |line, line_num|
+      resultado.push(line_num + 1) if empty_line?(line) && empty_line?(previous_line)
+      previous_line = line
+    end
+    resultado
+  end
+
+  private
+
+  def empty_line?(line)
+    return true if line.delete("\n").length.zero?
+
+    false
+  end
 end
