@@ -1,3 +1,5 @@
+# rubocop:disable Style/GuardClause
+
 require_relative '../lib/linter_logic.rb'
 
 class ActionListener
@@ -15,8 +17,11 @@ class ActionListener
 
   def action_extra_space_at_end
     extra_space = @linter_logic.extra_space_at_end
-    puts 'No extra spaces at the end of lines' if extra_space.empty?
-
-    extra_space.each { |elem| puts 'You have extra spaces at line number: ' + elem.to_s }
+    unless extra_space.empty?
+      puts 'BLANK SPACES AT THE END OF LINE' unless extra_space.empty?
+      extra_space.each { |elem| puts 'Line number: ' + elem.to_s }
+    end
   end
 end
+
+# rubocop:enable Style/GuardClause
