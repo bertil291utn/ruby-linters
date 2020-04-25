@@ -16,7 +16,7 @@ class LinterLogic
   def extra_space_at_end
     resultado = []
     File.foreach(@archivo).with_index do |line, line_num|
-      space_at_end = line.lstrip.count(' ')
+      space_at_end = line.count(' ') - line.rstrip.count(' ')
       resultado.push(line_num + 1) if space_at_end > Features::IDENTATION
     end
     resultado
