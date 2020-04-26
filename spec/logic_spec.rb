@@ -28,9 +28,16 @@ RSpec.describe LinterLogic do
       expect(linter_logic.single_row_max_characters).to eq([51])
     end
   end
+
   describe '#break_line_after_method' do
-    it 'sdfsdf' do
-      expect(linter_logic.break_line_after_method).to eq([18, 29])
+    it 'returns array with elements which has no empty line after a method ' do
+      expect(linter_logic.break_line_after_method).to eq([])
+    end
+  end
+
+  describe '#break_line_after_comment' do
+    it 'returns array with elements which has no empty line after a method ' do
+      expect(linter_logic.break_line_after_comment).to eq([2, 75])
     end
   end
 end

@@ -15,6 +15,7 @@ body {
   font-family: 'Lato', sans-serif !important;
   min-width: 375px;
 }
+
 .titles-font-family {
   font-family: 'CocoGoose', sans-serif !important;
 }
@@ -26,6 +27,7 @@ body {
 .text-secondary-color {
   color: var(--secondary-color);
 }
+
 .text-third-color {
   color: var(--third-color);
 }
@@ -69,6 +71,8 @@ p {
   margin: 0 auto;
   width: 50px;
 }
+
+/* GLOBALS VARIABLES */
 
 .section-title h4 {
   text-align: center;

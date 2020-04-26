@@ -28,7 +28,7 @@ class ActionListener
   def action_two_empty_lines
     two_space = @linter_logic.two_empty_lines
     unless two_space.empty?
-      result = "MORE THAN ONE EMPTY LINE \n"
+      result = "MORE THAN ONE BREAK LINE \n"
       two_space.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
     end
     result
@@ -46,8 +46,17 @@ class ActionListener
   def action_break_line_after_method
     after_method_close = @linter_logic.break_line_after_method
     unless after_method_close.empty?
-      result = "EXPECTED NEW BREAK LINE. Check \u{26A0} \n"
+      result = "EXPECTED NEW BREAK LINE AFTER METHOD . Check \u{26A0} \n"
       after_method_close.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
+    end
+    result
+  end
+
+  def action_break_line_after_comment
+    after_comment_close = @linter_logic.break_line_after_comment
+    unless after_comment_close.empty?
+      result = "EXPECTED NEW BREAK LINE AFTER COMMENT . Check \u{26A0} \n"
+      after_comment_close.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
     end
     result
   end

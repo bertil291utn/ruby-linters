@@ -54,10 +54,27 @@ class LinterLogic
     resultado
   end
 
+  def break_line_after_comment
+    resultado = []
+    previous_line = ''
+    File.foreach(@archivo).with_index do |line, line_num|
+      resultado.push(line_num + 1) if !empty_line?(line) && comment?(previous_line)
+      previous_line = line
+    end
+    resultado
+  end
+
   private
 
   def empty_line?(line)
     return true if line.delete("\n").length.zero?
+
+    false
+  end
+
+  def comment?(line)
+    comment_line = Features::COMMENTS
+    return true if line[0].eql?(comment_line) && line[line.length - 2].eql?(comment_line)
 
     false
   end
