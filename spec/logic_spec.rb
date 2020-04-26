@@ -25,7 +25,12 @@ RSpec.describe LinterLogic do
 
   describe '#single_row_max_characters' do
     it 'returns array with elements which has more than total number lines ' do
-      expect(linter_logic.single_row_max_characters).to eq([52])
+      expect(linter_logic.single_row_max_characters).to eq([51])
+    end
+  end
+  describe '#break_line_after_method' do
+    it 'sdfsdf' do
+      expect(linter_logic.break_line_after_method).to eq([18, 29])
     end
   end
 end

@@ -44,6 +44,16 @@ class LinterLogic
     resultado
   end
 
+  def break_line_after_method
+    resultado = []
+    previous_line = ''
+    File.foreach(@archivo).with_index do |line, line_num|
+      resultado.push(line_num + 1) if !empty_line?(line) && previous_line.include?(Features::CLOSE_METHOD)
+      previous_line = line
+    end
+    resultado
+  end
+
   private
 
   def empty_line?(line)

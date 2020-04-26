@@ -42,4 +42,13 @@ class ActionListener
     end
     result
   end
+
+  def action_break_line_after_method
+    after_method_close = @linter_logic.break_line_after_method
+    unless after_method_close.empty?
+      result = "EXPECTED NEW BREAK LINE. Check \u{26A0} \n"
+      after_method_close.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
+    end
+    result
+  end
 end
