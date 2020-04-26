@@ -60,4 +60,13 @@ class ActionListener
     end
     result
   end
+
+  def action_comments_space
+    after_comment_space = @linter_logic.comments_space
+    unless after_comment_space.empty?
+      result = "AFTER OPENING AND CLOSING COMMENTS TAG EXPECTED BLANK SPACE. Check \u{26A0} \n"
+      after_comment_space.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
+    end
+    result
+  end
 end

@@ -64,6 +64,16 @@ class LinterLogic
     resultado
   end
 
+  def comments_space
+    resultado = []
+    File.foreach(@archivo).with_index do |line, line_num|
+      next unless comment?(line)
+
+      resultado.push(line_num + 1) if !line[2].eql?(' ') || !line[line.length - 4].eql?(' ')
+    end
+    resultado
+  end
+
   private
 
   def empty_line?(line)

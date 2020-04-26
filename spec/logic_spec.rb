@@ -25,7 +25,7 @@ RSpec.describe LinterLogic do
 
   describe '#single_row_max_characters' do
     it 'returns array with elements which has more than total number lines ' do
-      expect(linter_logic.single_row_max_characters).to eq([51])
+      expect(linter_logic.single_row_max_characters).to eq([52])
     end
   end
 
@@ -36,8 +36,14 @@ RSpec.describe LinterLogic do
   end
 
   describe '#break_line_after_comment' do
-    it 'returns array with elements which has no empty line after a method ' do
-      expect(linter_logic.break_line_after_comment).to eq([2, 75])
+    it 'returns array with elements which has no empty line after comments ' do
+      expect(linter_logic.break_line_after_comment).to eq([])
+    end
+  end
+
+  describe '#comments_space' do
+    it 'returns array with elements which has no blank spaces after efore comment tags ' do
+      expect(linter_logic.comments_space).to eq([])
     end
   end
 end
