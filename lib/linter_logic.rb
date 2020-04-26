@@ -8,7 +8,7 @@ class LinterLogic
   def valid_file_lines?
     file = File.open(@archivo, 'r')
     count_file_size = file.readlines.size
-    return true if count_file_size < Features::TAMANO_ARCHIVO_LINEAS
+    return true if count_file_size < Features::TAMANO_LINEAS_ARCHIVO
 
     false
   end
@@ -28,6 +28,14 @@ class LinterLogic
     File.foreach(@archivo).with_index do |line, line_num|
       resultado.push(line_num + 1) if empty_line?(line) && empty_line?(previous_line)
       previous_line = line
+    end
+    resultado
+  end
+
+  def single_row_max_characters
+    resultado = []
+    File.foreach(@archivo).with_index do |line, line_num|
+      resultado.push(line_num + 1) if line.to_s.size > Features::TAMANO_LINEA
     end
     resultado
   end

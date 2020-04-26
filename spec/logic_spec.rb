@@ -22,6 +22,12 @@ RSpec.describe LinterLogic do
       expect(linter_logic.two_empty_lines).to eq([])
     end
   end
+
+  describe '#single_row_max_characters' do
+    it 'returns array with elements which has more than total number lines ' do
+      expect(linter_logic.single_row_max_characters).to eq([52])
+    end
+  end
 end
 
 # rubocop:enable Layout/LineLength

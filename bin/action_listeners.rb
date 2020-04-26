@@ -6,7 +6,7 @@ class ActionListener
   end
 
   def action_valid_file_lines
-    return "More than #{Features::TAMANO_ARCHIVO_LINEAS} lines is not allowed" unless @linter_logic.valid_file_lines?
+    return "More than #{Features::TAMANO_LINEAS_ARCHIVO} lines is not allowed" unless @linter_logic.valid_file_lines?
   end
 
   def action_extra_space_at_end
@@ -23,6 +23,15 @@ class ActionListener
     unless two_space.empty?
       result = "MORE THAN ONE EMPTY LINE \n"
       two_space.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
+    end
+    result
+  end
+
+  def action_single_row_max_characters
+    single_row_lines = @linter_logic.single_row_max_characters
+    unless single_row_lines.empty?
+      result = "EXPECTED JUST #{Features::TAMANO_LINEA} characters. Check \u{26A0} \n"
+      single_row_lines.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
     end
     result
   end
