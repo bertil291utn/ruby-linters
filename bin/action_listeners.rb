@@ -5,6 +5,13 @@ class ActionListener
     @linter_logic = LinterLogic.new(archivo)
   end
 
+  def action_file_name
+    result = "=========================================\n"
+    result += "#{@linter_logic.getting_file_name}\n"
+    result += '========================================='
+    result
+  end
+
   def action_valid_file_lines
     return "More than #{Features::TAMANO_LINEAS_ARCHIVO} lines is not allowed" unless @linter_logic.valid_file_lines?
   end

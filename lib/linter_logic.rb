@@ -5,6 +5,10 @@ class LinterLogic
     @archivo = archivo
   end
 
+  def getting_file_name
+    File.basename(@archivo)
+  end
+
   def valid_file_lines?
     file = File.open(@archivo, 'r')
     count_file_size = file.readlines.size
