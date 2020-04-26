@@ -42,8 +42,14 @@ RSpec.describe LinterLogic do
   end
 
   describe '#comments_space' do
-    it 'returns array with elements which has no blank spaces after efore comment tags ' do
+    it 'returns array with elements which has no blank spaces after and before comment tags ' do
       expect(linter_logic.comments_space).to eq([])
+    end
+  end
+
+  describe '#blank_space_after_name' do
+    it 'returns array with elements which has no blank spaces before close method brackets  ' do
+      expect(linter_logic.blank_space_after_name).to eq([9, 14])
     end
   end
 end

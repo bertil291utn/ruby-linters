@@ -9,3 +9,4 @@ puts al.action_single_row_max_characters
 puts al.action_break_line_after_method
 puts al.action_break_line_after_comment
 puts al.action_comments_space
+puts al.action_blank_space_after_name

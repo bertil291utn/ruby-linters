@@ -74,7 +74,24 @@ class LinterLogic
     resultado
   end
 
+  def blank_space_after_name
+    resultado = []
+    File.foreach(@archivo).with_index do |line, line_num|
+      next unless open_method_line?(line)
+
+      resultado.push(line_num + 1) unless line[line.length - 3].eql?(' ')
+    end
+    resultado
+  end
+
   private
+
+  def open_method_line?(line)
+    open_method_line = Features::OPEN_METHOD
+    return true if last_char_line(line).eql?(open_method_line)
+
+    false
+  end
 
   def empty_line?(line)
     return true if line.delete("\n").length.zero?
@@ -84,8 +101,12 @@ class LinterLogic
 
   def comment?(line)
     comment_line = Features::COMMENTS
-    return true if line[0].eql?(comment_line) && line[line.length - 2].eql?(comment_line)
+    return true if line[0].eql?(comment_line) && last_char_line(line).eql?(comment_line)
 
     false
+  end
+
+  def last_char_line(line)
+    line[line.length - 2]
   end
 end

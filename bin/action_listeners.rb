@@ -69,4 +69,13 @@ class ActionListener
     end
     result
   end
+
+  def action_blank_space_after_name
+    after_comment_space = @linter_logic.blank_space_after_name
+    unless after_comment_space.empty?
+      result = "BEFORE OPENING METHOD TAG EXPECTED BLANK SPACE. Check \u{26A0} \n"
+      after_comment_space.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
+    end
+    result
+  end
 end
