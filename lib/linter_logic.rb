@@ -1,3 +1,4 @@
+# rubocop:disable Style/GuardClause
 require_relative 'features.rb'
 
 class LinterLogic
@@ -18,34 +19,20 @@ class LinterLogic
     end
   end
 
-  def break_line_after_comment
-    resultado = []
-    previous_line = ''
-    File.foreach(@archivo).with_index do |line, line_num|
-      resultado.push(line_num + 1) if !empty_line?(line) && comment?(previous_line)
-      previous_line = line
-    end
-    resultado
+  def break_line_after_comment(line, line_num, previous_line)
+    return(line_num + 1) if !empty_line?(line) && comment?(previous_line)
   end
 
-  def comments_space
-    resultado = []
-    File.foreach(@archivo).with_index do |line, line_num|
-      next unless comment?(line)
-
-      resultado.push(line_num + 1) if !line[2].eql?(' ') || !line[line.length - 4].eql?(' ')
+  def comments_space(line, line_num)
+    if comment?(line)
+      return (line_num + 1) if !line[2].eql?(' ') || !line[line.length - 4].eql?(' ')
     end
-    resultado
   end
 
-  def blank_space_after_name
-    resultado = []
-    File.foreach(@archivo).with_index do |line, line_num|
-      next unless open_method_line?(line)
-
-      resultado.push(line_num + 1) unless line[line.length - 3].eql?(' ')
+  def blank_space_after_name(line, line_num)
+    if open_method_line?(line)
+      return (line_num + 1) unless line[line.length - 3].eql?(' ')
     end
-    resultado
   end
 
   def repeated_method_name(line_num, library_add, new_line)
@@ -57,24 +44,16 @@ class LinterLogic
     end
   end
 
-  def colon_line
-    resultado = []
-    File.foreach(@archivo).with_index do |line, line_num|
-      next unless method_rule_line?(line)
-
-      resultado.push(line_num + 1) unless colon?(line)
+  def colon_line(line, line_num)
+    if method_rule_line?(line)
+      return (line_num + 1) unless colon?(line)
     end
-    resultado
   end
 
-  def semicolon_line
-    resultado = []
-    File.foreach(@archivo).with_index do |line, line_num|
-      next unless method_rule_line?(line)
-
-      resultado.push(line_num + 1) unless semicolon?(line)
+  def semicolon_line(line, line_num)
+    if method_rule_line?(line)
+      return(line_num + 1) unless semicolon?(line)
     end
-    resultado
   end
 
   def clean_mehtod_name(line)
@@ -141,3 +120,5 @@ class LinterLogic
     line[line.length - 2]
   end
 end
+
+# rubocop:enable Style/GuardClause

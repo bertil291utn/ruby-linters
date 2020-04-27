@@ -1,4 +1,8 @@
 # rubocop:disable Layout/LineLength
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/MethodLength
 require_relative 'linter_logic.rb'
 require_relative '../lib/archivo.rb'
 
@@ -28,12 +32,32 @@ class ActionListener
       break_line_after_method_result = @linter_logic.break_line_after_method(line, line_num, previous_line)
       result += 'Expected break line after close method, line num: ' + break_line_after_method_result.to_s + "\n" unless break_line_after_method_result.nil?
 
-      # #sadasdas
+      # #break_line_after_comment
+      break_line_after_comment_result = @linter_logic.break_line_after_comment(line, line_num, previous_line)
+      result += 'Expected break line after comment, line num: ' + break_line_after_comment_result.to_s + "\n" unless break_line_after_comment_result.nil?
+
+      # #comments_space
+      comments_space_result = @linter_logic.comments_space(line, line_num)
+      result += 'Expected blank space between comments , line num: ' + comments_space_result.to_s + "\n" unless comments_space_result.nil?
+
+      # #blank_space_after_name
+      blank_space_after_name_result = @linter_logic.blank_space_after_name(line, line_num)
+      result += 'Expected blank space after method name , line num: ' + blank_space_after_name_result.to_s + "\n" unless blank_space_after_name_result.nil?
+
+      # #repeated_method_name
       if @linter_logic.open_method_name?(line)
         new_line = @linter_logic.clean_mehtod_name(line)
         repeated_method_name_result = @linter_logic.repeated_method_name(line_num, library_add, new_line)
         result += 'You have repeated classes. ' + repeated_method_name_result[0].to_s + " and #{repeated_method_name_result[1]} has `#{repeated_method_name_result[2]}` class\n" unless repeated_method_name_result.nil?
       end
+
+      # #colon_line
+      colon_line_result = @linter_logic.colon_line(line, line_num)
+      result += 'Expected colon, line num: ' + colon_line_result.to_s + "\n" unless colon_line_result.nil?
+
+      # #semicolon_line
+      semicolon_line_result = @linter_logic.semicolon_line(line, line_num)
+      result += 'Expected semicolon, line num: ' + semicolon_line_result.to_s + "\n" unless semicolon_line_result.nil?
 
       # repeated all foreach
       previous_line = line
@@ -46,69 +70,6 @@ class ActionListener
     result = "=========================================\n"
     result += "#{@archivo.getting_file_name}\n"
     result += '========================================='
-    result
-  end
-
-  def action_two_empty_lines
-    two_space = @linter_logic.two_empty_lines
-    unless two_space.empty?
-      result = "MORE THAN ONE BREAK LINE \n"
-      two_space.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
-
-  def action_single_row_max_characters
-    single_row_lines = @linter_logic.single_row_max_characters
-    unless single_row_lines.empty?
-      result = "EXPECTED JUST #{Features::TAMANO_LINEA} characters. Check \u{26A0} \n"
-      single_row_lines.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
-
-  def action_break_line_after_method
-    after_method_close = @linter_logic.break_line_after_method
-    unless after_method_close.empty?
-      result = "EXPECTED NEW BREAK LINE AFTER METHOD . Check \u{26A0} \n"
-      after_method_close.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
-
-  def action_break_line_after_comment
-    after_comment_close = @linter_logic.break_line_after_comment
-    unless after_comment_close.empty?
-      result = "EXPECTED NEW BREAK LINE AFTER COMMENT . Check \u{26A0} \n"
-      after_comment_close.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
-
-  def action_comments_space
-    after_comment_space = @linter_logic.comments_space
-    unless after_comment_space.empty?
-      result = "AFTER OPENING AND CLOSING COMMENTS TAG EXPECTED BLANK SPACE. Check \u{26A0} \n"
-      after_comment_space.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
-
-  def action_blank_space_after_name
-    after_comment_space = @linter_logic.blank_space_after_name
-    unless after_comment_space.empty?
-      result = "BEFORE OPENING METHOD TAG EXPECTED BLANK SPACE. Check \u{26A0} \n"
-      after_comment_space.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
-
-  def action_repeated_method_name
-    repeated_method = @linter_logic.repeated_method_name
-    unless repeated_method.empty?
-      result = "YOU HAVE REPEATED CLASSES. Check \u{26A0} \n"
-      repeated_method.each { |elem| result += 'Line number: ' + elem[0].to_s + " and #{elem[1]} has `#{elem[2]}` class\n" }
-    end
     result
   end
 
@@ -132,3 +93,7 @@ class ActionListener
 end
 
 # rubocop:enable Layout/LineLength
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/MethodLength
