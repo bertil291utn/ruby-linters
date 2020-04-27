@@ -1,51 +1,21 @@
 require_relative 'features.rb'
 
 class LinterLogic
-  def initialize(archivo)
-    @archivo = archivo
+  def initialize; end
+
+  def two_empty_lines(line, line_num, previous_line)
+    return (line_num + 1) if empty_line?(line) && empty_line?(previous_line)
   end
 
-  def getting_file_name
-    File.basename(@archivo)
+  def single_row_max_characters(line, line_num)
+    return (line_num + 1) if line.to_s.size > Features::TAMANO_LINEA
   end
 
-  def valid_file_lines?
-    file = File.open(@archivo, 'r')
-    count_file_size = file.readlines.size
-    return true if count_file_size < Features::TAMANO_LINEAS_ARCHIVO
-
-    false
-  end
-
-  def two_empty_lines
-    resultado = []
-    previous_line = nil
-    File.foreach(@archivo).with_index do |line, line_num|
-      resultado.push(line_num + 1) if empty_line?(line) && empty_line?(previous_line)
-      previous_line = line
-    end
-    resultado
-  end
-
-  def single_row_max_characters
-    resultado = []
-    File.foreach(@archivo).with_index do |line, line_num|
-      resultado.push(line_num + 1) if line.to_s.size > Features::TAMANO_LINEA
-    end
-    resultado
-  end
-
-  def break_line_after_method
-    resultado = []
-    previous_line = ''
+  def break_line_after_method(line, line_num, previous_line)
     close_method = Features::CLOSE_METHOD
-    File.foreach(@archivo).with_index do |line, line_num|
-      next if line.include?(close_method) && previous_line.include?(close_method)
-
-      resultado.push(line_num + 1) if !empty_line?(line) && previous_line.include?(close_method)
-      previous_line = line
+    unless line.include?(close_method) && previous_line.include?(close_method)
+      return (line_num + 1) if !empty_line?(line) && previous_line.include?(close_method)
     end
-    resultado
   end
 
   def break_line_after_comment
@@ -78,22 +48,13 @@ class LinterLogic
     resultado
   end
 
-  def repeated_method_name
-    library_add = {}
-    resultado = []
-    File.foreach(@archivo).with_index do |line, line_num|
-      next unless open_method_name?(line)
-
-      new_line = clean_mehtod_name(line)
-      unless library_add.key(new_line).nil?
-        resultado_temp = [library_add.key(new_line)]
-        resultado_temp.push(line_num + 1)
-        resultado_temp.push(new_line)
-        resultado.push(resultado_temp)
-      end
-      library_add[line_num + 1] = new_line
+  def repeated_method_name(line_num, library_add, new_line)
+    unless library_add.key(new_line).nil?
+      resultado_temp = [library_add.key(new_line)]
+      resultado_temp.push(line_num + 1)
+      resultado_temp.push(new_line)
+      resultado_temp
     end
-    resultado
   end
 
   def colon_line
@@ -114,6 +75,22 @@ class LinterLogic
       resultado.push(line_num + 1) unless semicolon?(line)
     end
     resultado
+  end
+
+  def clean_mehtod_name(line)
+    line.lstrip
+    line.delete!("\n")
+    line.delete!('{')
+  end
+
+  def open_method_name?(line)
+    open_method_line = Features::OPEN_METHOD
+    no_name_initials = Features::NO_NAME_INITIALS
+    if !line[0].eql?(' ') && last_char_line(line).eql?(open_method_line)
+      return true if no_name_initials.all? { |elem| !elem.eql?(line[0]) }
+    end
+
+    false
   end
 
   private
@@ -139,25 +116,9 @@ class LinterLogic
     false
   end
 
-  def clean_mehtod_name(line)
-    line.delete!(' ')
-    line.delete!("\n")
-    line.delete!('{')
-  end
-
   def open_method_line?(line)
     open_method_line = Features::OPEN_METHOD
     return true if last_char_line(line).eql?(open_method_line)
-
-    false
-  end
-
-  def open_method_name?(line)
-    open_method_line = Features::OPEN_METHOD
-    no_name_initials = Features::NO_NAME_INITIALS
-    if !line[0].eql?(' ') && last_char_line(line).eql?(open_method_line)
-      return true if no_name_initials.all? { |elem| !elem.eql?(line[0]) }
-    end
 
     false
   end

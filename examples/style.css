@@ -75,8 +75,12 @@ p {
   margin: 0 auto;
   width: 50px;
 }
-
 /* GLOBALS VARIABLES */
+
+.section-title h4 {
+  text-align: center;
+  font-weight: 600;
+}
 
 .section-title h4 {
   text-align: center;
@@ -86,6 +90,7 @@ p {
 .hidden-section-title {
   display: none;
 }
+
 
 .hidden-section-title {
   display: none;

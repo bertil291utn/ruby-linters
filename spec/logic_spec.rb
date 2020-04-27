@@ -4,12 +4,6 @@ RSpec.describe LinterLogic do
   archivo = './examples/style.css'
   let(:linter_logic) { LinterLogic.new(archivo) }
 
-  describe '#valid_file_lines?' do
-    it 'returns true when the number of lines in file is less than featured lines ' do
-      expect(linter_logic.valid_file_lines?).to be_truthy
-    end
-  end
-
   describe '#two_empty_lines?' do
     it 'returns an array with elements (number of the line where the are more than two empty lines) ' do
       expect(linter_logic.two_empty_lines).to eq([])

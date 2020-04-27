@@ -1,26 +1,49 @@
 # rubocop:disable Layout/LineLength
 require_relative 'linter_logic.rb'
+require_relative '../lib/archivo.rb'
 
 class ActionListener
   def initialize(archivo)
-    @linter_logic = LinterLogic.new(archivo)
-    # init_file
+    @linter_logic = LinterLogic.new
+    @archivo = Archivo.new(archivo)
   end
 
-  def init_file
-    File.foreach(@archivo).with_index do |line, line_num|
+  def al_init_file
+    library_add = {}
+    previous_line = ''
+    result = action_file_name + "\n"
+    File.foreach(@archivo.archivo).with_index do |line, line_num|
+      # #two_empty_lines
+      two_empty_lines_result = @linter_logic.two_empty_lines(line, line_num, previous_line)
+      result += 'Expected only one break line, line num: ' + two_empty_lines_result.to_s + "\n" unless two_empty_lines_result.nil?
+
+      # #single_row_max_characters
+      single_row_max_characters_result = @linter_logic.single_row_max_characters(line, line_num)
+      result += "Expected only  #{Features::TAMANO_LINEA} characters line num: " + single_row_max_characters_result.to_s + "\n" unless single_row_max_characters_result.nil?
+
+      # #break_line_after_method
+      break_line_after_method_result = @linter_logic.break_line_after_method(line, line_num, previous_line)
+      result += 'Expected break line after close method, line num: ' + break_line_after_method_result.to_s + "\n" unless break_line_after_method_result.nil?
+
+      # #sadasdas
+      if @linter_logic.open_method_name?(line)
+        new_line = @linter_logic.clean_mehtod_name(line)
+        repeated_method_name_result = @linter_logic.repeated_method_name(line_num, library_add, new_line)
+        result += 'You have repeated classes. ' + repeated_method_name_result[0].to_s + " and #{repeated_method_name_result[1]} has `#{repeated_method_name_result[2]}` class\n" unless repeated_method_name_result.nil?
+      end
+
+      # repeated all foreach
+      previous_line = line
+      library_add[line_num + 1] = new_line
     end
+    result
   end
 
   def action_file_name
     result = "=========================================\n"
-    result += "#{@linter_logic.getting_file_name}\n"
+    result += "#{@archivo.getting_file_name}\n"
     result += '========================================='
     result
-  end
-
-  def action_valid_file_lines
-    return "More than #{Features::TAMANO_LINEAS_ARCHIVO} lines is not allowed" unless @linter_logic.valid_file_lines?
   end
 
   def action_two_empty_lines
