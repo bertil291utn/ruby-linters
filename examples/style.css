@@ -36,6 +36,10 @@ body {
   background-color: var(--primary-color);
 }
 
+.titles-font-family {
+  font-family: 'CocoGoose', sans-serif !important;
+}
+
 .bg-secondary-color {
   background-color: var(--secondary-color);
 }
@@ -44,7 +48,7 @@ body {
   background-color: var(--third-color);
 }
 
-.text-align-center {
+#stext-align-center {
   text-align: center;
 }
 
@@ -81,4 +85,10 @@ p {
 
 .hidden-section-title {
   display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
 }

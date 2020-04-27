@@ -17,15 +17,6 @@ class LinterLogic
     false
   end
 
-  def extra_space_at_end
-    resultado = []
-    File.foreach(@archivo).with_index do |line, line_num|
-      space_at_end = line.count(' ') - line.rstrip.count(' ')
-      resultado.push(line_num + 1) if space_at_end > Features::IDENTATION
-    end
-    resultado
-  end
-
   def two_empty_lines
     resultado = []
     previous_line = nil
@@ -47,8 +38,11 @@ class LinterLogic
   def break_line_after_method
     resultado = []
     previous_line = ''
+    close_method = Features::CLOSE_METHOD
     File.foreach(@archivo).with_index do |line, line_num|
-      resultado.push(line_num + 1) if !empty_line?(line) && previous_line.include?(Features::CLOSE_METHOD)
+      next if line.include?(close_method) && previous_line.include?(close_method)
+
+      resultado.push(line_num + 1) if !empty_line?(line) && previous_line.include?(close_method)
       previous_line = line
     end
     resultado
@@ -84,7 +78,24 @@ class LinterLogic
     resultado
   end
 
+  def repeated_method_name
+    library_add = { 1 => 'abc' }
+    resultado = []
+    File.foreach(@archivo).with_index do |line, line_num|
+      next unless open_method_name?(line)
+
+      new_line = clean_mehtod_name(line)
+      puts "#{library_add.key(new_line)} #{line_num + 1} #{new_line}" unless library_add.key(new_line).nil?
+      library_add[line_num + 1] = new_line
+    end
+  end
+
   private
+
+  def clean_mehtod_name(line)
+    line.delete!(' ')
+    line.delete!('{')
+  end
 
   def open_method_line?(line)
     open_method_line = Features::OPEN_METHOD
@@ -93,8 +104,19 @@ class LinterLogic
     false
   end
 
+  def open_method_name?(line)
+    open_method_line = Features::OPEN_METHOD
+    no_name_initials = Features::NO_NAME_INITIALS
+    if !line[0].eql?(' ') && last_char_line(line).eql?(open_method_line)
+      return true if no_name_initials.all? { |elem| !elem.eql?(line[0]) }
+    end
+
+    false
+  end
+
   def empty_line?(line)
-    return true if line.delete("\n").length.zero?
+    remove_blank = line.length >= 1 ? line.delete(' ') : line
+    return true if remove_blank.delete("\n").length.zero?
 
     false
   end

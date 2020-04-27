@@ -5,4 +5,5 @@ module Features
   OPEN_METHOD = '{'.freeze
   CLOSE_METHOD = '}'.freeze
   COMMENTS = '/'.freeze
+  NO_NAME_INITIALS = %w[@ :].freeze
 end
