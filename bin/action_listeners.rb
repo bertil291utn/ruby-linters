@@ -1,3 +1,4 @@
+# rubocop:disable Layout/LineLength
 require_relative '../lib/linter_logic.rb'
 
 class ActionListener
@@ -97,3 +98,5 @@ class ActionListener
     result
   end
 end
+
+# rubocop:enable Layout/LineLength
