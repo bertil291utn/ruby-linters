@@ -1,9 +1,15 @@
 # rubocop:disable Layout/LineLength
-require_relative '../lib/linter_logic.rb'
+require_relative 'linter_logic.rb'
 
 class ActionListener
   def initialize(archivo)
     @linter_logic = LinterLogic.new(archivo)
+    # init_file
+  end
+
+  def init_file
+    File.foreach(@archivo).with_index do |line, line_num|
+    end
   end
 
   def action_file_name

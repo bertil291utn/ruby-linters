@@ -1,4 +1,4 @@
-require_relative '../lib/features.rb'
+require_relative 'features.rb'
 
 class LinterLogic
   def initialize(archivo)
