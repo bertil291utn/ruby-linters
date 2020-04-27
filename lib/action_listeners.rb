@@ -3,12 +3,15 @@ require_relative 'linter_logic.rb'
 require_relative '../lib/archivo.rb'
 
 class ActionListener
+  attr_reader :result
+
   def initialize(archivo)
     @linter_logic = LinterLogic.new
     @archivo = Archivo.new(archivo)
+    @result = al_init_methods
   end
 
-  def al_init_file
+  def al_init_methods
     library_add = {}
     previous_line = ''
     result = action_file_name + "\n"
