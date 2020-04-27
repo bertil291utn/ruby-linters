@@ -99,14 +99,39 @@ class LinterLogic
   def colon_line
     resultado = []
     File.foreach(@archivo).with_index do |line, line_num|
-      next unless last_char_line(line).eql?(';')
+      next unless method_rule_line?(line)
 
       resultado.push(line_num + 1) unless colon?(line)
     end
     resultado
   end
 
+  def semicolon_line
+    resultado = []
+    File.foreach(@archivo).with_index do |line, line_num|
+      next unless method_rule_line?(line)
+
+      resultado.push(line_num + 1) unless semicolon?(line)
+    end
+    resultado
+  end
+
   private
+
+  def method_rule_line?(line)
+    blank_space_count = line.size - line.lstrip.length
+    blank_space = blank_space_count.eql?(4) || blank_space_count.eql?(2)
+    method_rule_condition = blank_space && !line.include?('{') && !line.include?('}')
+    return true if method_rule_condition
+
+    false
+  end
+
+  def semicolon?(line)
+    return true if last_char_line(line).eql?(';')
+
+    false
+  end
 
   def colon?(line)
     return true if line.include?(':')

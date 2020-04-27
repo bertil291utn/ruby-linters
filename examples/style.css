@@ -2,7 +2,7 @@
 
 :root {
   --primary-color #ee523c;
-  --secondary-color: #272a31;
+  --secondary-color: #272a31
   --third-color: #d3d3d3;
 }
 
@@ -17,11 +17,11 @@ body {
 }
 
 .titles-font-family {
-  font-family: 'CocoGoose', sans-serif !important;
+  font-family 'CocoGoose', sans-serif !important;
 }
 
 .text-primary-color {
-  color: var(--primary-color);
+  color: var(--primary-color)
 }
 
 .text-secondary-color {
@@ -63,7 +63,7 @@ p {
 
 .btn-outline-primary:not(:disabled):not(.disabled):active {
   color: #fff;
-  background-color: var(--primary-color);
+  background-color var(--primary-color)
 }
 
 .section-title {
@@ -90,5 +90,6 @@ p {
 @media only screen and (max-width: 600px) {
   body {
     background-color: lightblue;
+    background-color lightblue
   }
 }

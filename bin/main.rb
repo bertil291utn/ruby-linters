@@ -11,3 +11,4 @@ puts al.action_comments_space
 puts al.action_blank_space_after_name
 puts al.action_repeated_method_name
 puts al.action_colon_line
+puts al.action_semicolon_line

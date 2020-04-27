@@ -54,7 +54,13 @@ RSpec.describe LinterLogic do
 
   describe '#colon_line' do
     it 'returns array with number lines where there\'s no colon :' do
-      expect(linter_logic.colon_line).to eql([4])
+      expect(linter_logic.colon_line).to eql([4, 11, 20, 66, 93])
+    end
+  end
+
+  describe '#semicolon_line' do
+    it 'returns array with number lines where there\'s no semicolon :' do
+      expect(linter_logic.semicolon_line).to eql([5, 24, 66, 93])
     end
   end
 end
