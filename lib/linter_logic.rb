@@ -79,21 +79,44 @@ class LinterLogic
   end
 
   def repeated_method_name
-    library_add = { 1 => 'abc' }
+    library_add = {}
     resultado = []
     File.foreach(@archivo).with_index do |line, line_num|
       next unless open_method_name?(line)
 
       new_line = clean_mehtod_name(line)
-      puts "#{library_add.key(new_line)} #{line_num + 1} #{new_line}" unless library_add.key(new_line).nil?
+      unless library_add.key(new_line).nil?
+        resultado_temp = [library_add.key(new_line)]
+        resultado_temp.push(line_num + 1)
+        resultado_temp.push(new_line)
+        resultado.push(resultado_temp)
+      end
       library_add[line_num + 1] = new_line
     end
+    resultado
+  end
+
+  def colon_line
+    resultado = []
+    File.foreach(@archivo).with_index do |line, line_num|
+      next unless last_char_line(line).eql?(';')
+
+      resultado.push(line_num + 1) unless colon?(line)
+    end
+    resultado
   end
 
   private
 
+  def colon?(line)
+    return true if line.include?(':')
+
+    false
+  end
+
   def clean_mehtod_name(line)
     line.delete!(' ')
+    line.delete!("\n")
     line.delete!('{')
   end
 

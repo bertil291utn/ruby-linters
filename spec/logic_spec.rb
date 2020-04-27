@@ -1,4 +1,3 @@
-# rubocop:disable Layout/LineLength
 require_relative '../lib/linter_logic.rb'
 
 RSpec.describe LinterLogic do
@@ -48,9 +47,14 @@ RSpec.describe LinterLogic do
   end
 
   describe '#repeated_method_name' do
-    it 'sdfsdfsdf' do
-      expect(linter_logic.repeated_method_name).to eql([])
+    it 'returns matrix with elements (firstline,secondline, class) which has repeatd classes' do
+      expect(linter_logic.repeated_method_name).to eql([[19, 39, '.titles-font-family']])
+    end
+  end
+
+  describe '#colon_line' do
+    it 'returns array with number lines where there\'s no colon :' do
+      expect(linter_logic.colon_line).to eql([4])
     end
   end
 end
-# rubocop:enable Layout/LineLength

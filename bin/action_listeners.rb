@@ -69,4 +69,22 @@ class ActionListener
     end
     result
   end
+
+  def action_repeated_method_name
+    repeated_method = @linter_logic.repeated_method_name
+    unless repeated_method.empty?
+      result = "YOU HAVE REPEATED CLASSES. Check \u{26A0} \n"
+      repeated_method.each { |elem| result += 'Line number: ' + elem[0].to_s + " and #{elem[1]} has `#{elem[2]}` class\n" }
+    end
+    result
+  end
+
+  def action_colon_line
+    colon_missing_line = @linter_logic.colon_line
+    unless colon_missing_line.empty?
+      result = "SEMICOLON IS MISSING . Check \u{26A0} \n"
+      colon_missing_line.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
+    end
+    result
+  end
 end

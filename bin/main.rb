@@ -9,3 +9,5 @@ puts al.action_break_line_after_method
 puts al.action_break_line_after_comment
 puts al.action_comments_space
 puts al.action_blank_space_after_name
+puts al.action_repeated_method_name
+puts al.action_colon_line
