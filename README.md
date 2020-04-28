@@ -21,7 +21,7 @@ In order to start with the project:
 2. Clone [this repository :blue_book:](https://github.com/bertil291utn/ruby-linters.git)
 3. Run the main file
     - In a terminal window write `ruby `*`[your_file_path]`*`main.rb`
-4. Once you get the file to enter your CSS file path. By default, it is set style.css in the examples folder, whether add a file path always it returned a file
+4. Once you get the file to enter your CSS file path. By default, it is set `style.css` in the examples folder, it doesn't matter always it has been returned a file it's going to return value 
 
 | Without path                                                 | With path                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
