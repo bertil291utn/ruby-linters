@@ -1,5 +1,8 @@
 # !/usr/bin/env ruby
 
 require_relative '../lib/action_listeners.rb'
-al = ActionListener.new('./examples/style.css')
+puts 'Enter your CSS file path: '
+file_path = gets.chomp
+file_path = './examples/style.css' if file_path.empty?
+al = ActionListener.new(file_path)
 puts al.result
