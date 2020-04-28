@@ -72,24 +72,6 @@ class ActionListener
     result += '========================================='
     result
   end
-
-  def action_colon_line
-    colon_missing_line = @linter_logic.colon_line
-    unless colon_missing_line.empty?
-      result = "COLON IS MISSING . Check \u{26A0} \n"
-      colon_missing_line.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
-
-  def action_semicolon_line
-    colon_missing_line = @linter_logic.semicolon_line
-    unless colon_missing_line.empty?
-      result = "SEMICOLON IS MISSING . Check \u{26A0} \n"
-      colon_missing_line.each { |elem| result += 'Line number: ' + elem.to_s + "\n" }
-    end
-    result
-  end
 end
 
 # rubocop:enable Layout/LineLength
