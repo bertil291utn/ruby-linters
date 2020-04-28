@@ -1,4 +1,4 @@
-require_relative '../lib/linter_logic.rb'
+require './lib/linter_logic.rb'
 
 RSpec.describe LinterLogic do
   archivo = './examples/style.css'

@@ -4,7 +4,7 @@
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/MethodLength
 require_relative 'linter_logic.rb'
-require_relative '../lib/archivo.rb'
+require_relative 'archivo.rb'
 
 class ActionListener
   attr_reader :result

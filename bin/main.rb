@@ -1,6 +1,6 @@
 # !/usr/bin/env ruby
 
-require_relative '../lib/action_listeners.rb'
+require './lib/action_listeners.rb'
 puts 'Enter your CSS file path: '
 file_path = gets.chomp
 file_path = './examples/style.css' if file_path.empty?
